@@ -5,7 +5,7 @@ const ulGallery = document.querySelector(".gallery");
 
 const renderList = (arr) => arr.map(item=>`<li class="gallery__item">
   <a class="gallery__link">
-  <img src="${item.preview}" alt="${item.description}" class="gallery__image"/>
+  <img src="${item.preview}" alt="${item.description}" class="gallery__image" data-sourse="${origin}"/>
   </a>
 </li>
 `).join("");
@@ -14,10 +14,14 @@ ulGallery.insertAdjacentHTML("beforeend",renderList(galleryItems));
 
 ////////////////////////////////////////
 
+
+
 const handleListClick = (e) => {
-  if (e.currentTarget === e.target) {
+  if (e.currentTarget !== e.target) {
     return;
   }
+  const { id } = e.target.dataset;
+
   const modalInstance = basicLightbox.create(`
   <div class="modal">
     <a class="gallery__link">
@@ -25,12 +29,23 @@ const handleListClick = (e) => {
     </a>
   </div>
 `
-  )
+  ) 
   modalInstance.show();
 };
 
 
-ulGallery.addEventListener("click", handleListClick);
+ ulGallery.addEventListener("click", handleListClick);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
