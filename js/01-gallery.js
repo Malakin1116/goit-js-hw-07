@@ -1,40 +1,65 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
-const ulGallery = document.querySelector(".gallery");
 
-const renderList = (arr) => arr.map(item=>`<li class="gallery__item">
-  <a class="gallery__link">
-  <img src="${item.preview}" alt="${item.description}" class="gallery__image" data-sourse="${origin}"/>
-  </a>
-</li>
-`).join("");
-
-ulGallery.insertAdjacentHTML("beforeend",renderList(galleryItems));
-
-////////////////////////////////////////
+const listEl = document.querySelector(".gallery");
 
 
-
-const handleListClick = (e) => {
-  if (e.currentTarget !== e.target) {
-    return;
-  }
-  const { id } = e.target.dataset;
-
-  const modalInstance = basicLightbox.create(`
-  <div class="modal">
-    <a class="gallery__link">
-      <img src="${item.original}" alt="${item.description}" class="gallery__image"/>
+const renderList = (arr, container) =>{ 
+    const markup = arr.map((item) => `<li class="gallery_item"> 
+    <a class="gallery_link" href="${item.original}">
+    <img
+        class="gallery_image"
+        src="${item.preview}"
+        data-source ="${item.original}"
+        alt="${item.description}"
+        width="360"
+        />
     </a>
-  </div>
-`
-  ) 
-  modalInstance.show();
-};
+    </li>`).join("");
+    
+    container.insertAdjacentHTML("afterbegin", markup);
+}
 
 
- ulGallery.addEventListener("click", handleListClick);
+
+
+
+
+// const ulGallery = document.querySelector(".gallery");
+
+// const renderList = (arr) => arr.map(item=>`<li class="gallery__item">
+//   <a class="gallery__link">
+//   <img src="${item.preview}" alt="${item.description}" class="gallery__image" data-sourse="${origin}"/>
+//   </a>
+// </li>
+// `).join("");
+
+// ulGallery.insertAdjacentHTML("beforeend",renderList(galleryItems));
+
+// ////////////////////////////////////////
+
+
+
+// const handleListClick = (e) => {
+//   if (e.currentTarget !== e.target) {
+//     return;
+//   }
+//   const { id } = e.target.dataset;
+
+//   const modalInstance = basicLightbox.create(`
+//   <div class="modal">
+//     <a class="gallery__link">
+//       <img src="${item.original}" alt="${item.description}" class="gallery__image"/>
+//     </a>
+//   </div>
+// `
+//   ) 
+//   modalInstance.show();
+// };
+
+
+//  ulGallery.addEventListener("click", handleListClick);
 
 
 
