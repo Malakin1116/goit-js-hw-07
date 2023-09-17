@@ -11,7 +11,7 @@ const renderList = (arr, container) => {
           src="${item.preview}"
           data-source="${item.original}"
           alt="${item.description}"
-          width="372px"
+          width="330px"
         />
       </a>
     </li>`).join("");
