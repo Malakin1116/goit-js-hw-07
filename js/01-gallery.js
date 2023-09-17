@@ -1,107 +1,68 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
+const ulList = document.querySelector(".gallery");
 
-const listEl = document.querySelector(".gallery");
-
-
-const renderList = (arr, container) =>{ 
-    const markup = arr.map((item) => `<li class="gallery_item"> 
-    <a class="gallery_link" href="${item.original}">
-    <img
-        class="gallery_image"
-        src="${item.preview}"
-        data-source ="${item.original}"
-        alt="${item.description}"
-        width="360"
+const renderList = (arr, container) => { 
+  const markup = arr.map((item) => `
+    <li class="gallery_item" > 
+      <a class="gallery_link" href="${item.original}">
+        <img
+          class="gallery_image"
+          src="${item.preview}"
+          data-source="${item.original}"
+          alt="${item.description}"
+          width="372px"
         />
-    </a>
+      </a>
     </li>`).join("");
-    
-    container.insertAdjacentHTML("afterbegin", markup);
+  
+  container.insertAdjacentHTML("afterbegin", markup);
 }
 
+const imgGalleryOnClick = (e) => { 
+  e.preventDefault();
 
+  if (e.target.nodeName !== "IMG") {
+    return;
+  }
 
+  const clickedImg = e.target;
+  const chosenImgSource = clickedImg.getAttribute("data-source");
 
+  const galleryItem = galleryItems.find(item => item.original === chosenImgSource);
 
+  if (galleryItem) {
+    console.log(galleryItem.original); 
+  }
 
-// const ulGallery = document.querySelector(".gallery");
+  const modalInstance = basicLightbox.create(`
+    <div class="modal"> 
+      <li class="gallery_item">
+        <img 
+          src="${galleryItem.original}" 
+          class="gallery_image"
+          data-source="${galleryItem.original}"
+          alt="${galleryItem.description}"
+        />
+      </li>
+    </div>
+  `);
+  
+  modalInstance.show();
 
-// const renderList = (arr) => arr.map(item=>`<li class="gallery__item">
-//   <a class="gallery__link">
-//   <img src="${item.preview}" alt="${item.description}" class="gallery__image" data-sourse="${origin}"/>
-//   </a>
-// </li>
-// `).join("");
+  const handlerEsc = (event) => {
+    if (event.code === "Escape") {
+      modalInstance.close();
+      document.removeEventListener("keydown", handlerEsc);
+    }
+  };
 
-// ulGallery.insertAdjacentHTML("beforeend",renderList(galleryItems));
+  document.addEventListener("keydown", handlerEsc);
 
-// ////////////////////////////////////////
+  const containerModal = document.querySelector(".modal");
+  containerModal.style.width = `80%`;   
+};
 
+renderList(galleryItems, ulList);
+ulList.addEventListener("click", imgGalleryOnClick);
 
-
-// const handleListClick = (e) => {
-//   if (e.currentTarget !== e.target) {
-//     return;
-//   }
-//   const { id } = e.target.dataset;
-
-//   const modalInstance = basicLightbox.create(`
-//   <div class="modal">
-//     <a class="gallery__link">
-//       <img src="${item.original}" alt="${item.description}" class="gallery__image"/>
-//     </a>
-//   </div>
-// `
-//   ) 
-//   modalInstance.show();
-// };
-
-
-//  ulGallery.addEventListener("click", handleListClick);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Создаем функцию для открытия модального окна с изображением
-// function openModal(event) {
-//   event.preventDefault();
-
-//   if (event.target.nodeName === "IMG") {
-//     const originalImageSrc = event.target.dataset.source; // Получаем URL большого изображения из data-атрибута
-//     const imageDescription = event.target.alt;
-
-//     const modalHtml = `
-//       <div class="modal">
-//         <img src="${originalImageSrc}" alt="${imageDescription}">
-//         <p>${imageDescription}</p>
-//       </div>
-//     `;
-
-//     // Добавляем модальное окно в тело документа
-//     document.body.insertAdjacentHTML("beforeend", modalHtml);
-
-//     // Добавляем обработчик клика для закрытия модального окна
-//     document.body.addEventListener("click", closeModal);
-//   }
-// }
-
-// // Создаем функцию для закрытия модального окна
-// function closeModal(event) {
-//   if (event.target.classList.contains("modal")) {
-//     document.querySelector(".modal").remove();
-//     // Удаляем обработчик клика после закрытия модального окна
-//     document.body.removeEventListener("click", closeModal);
-//   }
-// }
